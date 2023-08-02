@@ -1,26 +1,28 @@
-import { EditResult } from "../types/handlers";
-import { Identity, IdObj } from "../types/utils";
-import { TreeProps } from "../types/tree-props";
-import { MutableRefObject } from "react";
-import { Align, FixedSizeList, ListOnItemsRenderedProps } from "react-window";
 import * as utils from "../utils";
-import { DefaultCursor } from "../components/default-cursor";
-import { DefaultRow } from "../components/default-row";
-import { DefaultNode } from "../components/default-node";
-import { NodeApi } from "./node-api";
-import { edit } from "../state/edit-slice";
+
 import { Actions, RootState } from "../state/root-reducer";
+import { Align, FixedSizeList, ListOnItemsRenderedProps } from "react-window";
+import { IdObj, Identity } from "../types/utils";
+import { ROOT_ID, createRoot } from "../data/create-root";
 import { focus, treeBlur } from "../state/focus-slice";
-import { createRoot, ROOT_ID } from "../data/create-root";
-import { actions as visibility } from "../state/open-slice";
-import { actions as selection } from "../state/selection-slice";
-import { actions as dnd } from "../state/dnd-slice";
-import { DefaultDragPreview } from "../components/default-drag-preview";
-import { DefaultContainer } from "../components/default-container";
+
 import { Cursor } from "../dnd/compute-drop";
+import { DefaultContainer } from "../components/default-container";
+import { DefaultCursor } from "../components/default-cursor";
+import { DefaultDragPreview } from "../components/default-drag-preview";
+import { DefaultNode } from "../components/default-node";
+import { DefaultRow } from "../components/default-row";
+import { EditResult } from "../types/handlers";
+import { MutableRefObject } from "react";
+import { NodeApi } from "./node-api";
 import { Store } from "redux";
-import { createList } from "../data/create-list";
+import { TreeProps } from "../types/tree-props";
 import { createIndex } from "../data/create-index";
+import { createList } from "../data/create-list";
+import { actions as dnd } from "../state/dnd-slice";
+import { edit } from "../state/edit-slice";
+import { actions as selection } from "../state/selection-slice";
+import { actions as visibility } from "../state/open-slice";
 
 const { safeRun, identify, identifyNull } = utils;
 export class TreeApi<T> {
@@ -335,6 +337,7 @@ export class TreeApi<T> {
     if (this.focusedNode && changeFocus) {
       safeRun(this.props.onFocus, this.focusedNode);
     }
+    if (this.selectedNodes.length === 0) return;
     safeRun(this.props.onSelect, this.selectedNodes);
   }
 
