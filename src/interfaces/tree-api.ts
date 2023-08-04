@@ -337,7 +337,6 @@ export class TreeApi<T> {
     if (this.focusedNode && changeFocus) {
       safeRun(this.props.onFocus, this.focusedNode);
     }
-    if (this.selectedNodes.length === 0) return;
     safeRun(this.props.onSelect, this.selectedNodes);
   }
 
@@ -373,8 +372,8 @@ export class TreeApi<T> {
   }
 
   deselectAll() {
-    this.setSelection({ ids: [], anchor: null, mostRecent: null });
-    safeRun(this.props.onSelect, this.selectedNodes);
+    // this.setSelection({ ids: [], anchor: null, mostRecent: null });
+    // safeRun(this.props.onSelect, this.selectedNodes);
   }
 
   selectAll() {
